@@ -1,54 +1,10 @@
 from typing import Any, Dict, List
 import json
-from langchain_openai import ChatOpenAI
 from src.config import get_settings
 import plotly.express as px
-from src.llm_utils import TieredRaceChatModel
+from src.llm_utils import get_llm_model
 import streamlit as st
 import sys
-
-def _get_llm():
-    s = get_settings()
-    
-    # 1. Primary (Cheap): Kimi K2 Thinking via HF
-    hf_model = None
-    if s.huggingfacehub_api_token:
-        hf_model = ChatOpenAI(
-            model="moonshotai/Kimi-K2-Thinking",
-            api_key=s.huggingfacehub_api_token,
-            base_url="https://router.huggingface.co/v1",
-            temperature=0
-        )
-    
-    # 2. Secondary (Paid/Fast): OpenAI or Moonshot
-    paid_model = None
-    if s.openai_api_key:
-        paid_model = ChatOpenAI(
-            model="gpt-3.5-turbo",
-            api_key=s.openai_api_key,
-            temperature=0
-        )
-    elif s.moonshot_api_key:
-        paid_model = ChatOpenAI(
-            model="moonshot-v1-8k",
-            api_key=s.moonshot_api_key,
-            base_url="https://api.moonshot.cn/v1",
-            temperature=0
-        )
-
-    # 3. Fallback/Standard logic if keys are missing
-    if hf_model and paid_model:
-        return TieredRaceChatModel(
-            primary_model=hf_model,
-            secondary_model=paid_model,
-            latency_budget=3.0 # 3 seconds
-        )
-    elif hf_model:
-        return hf_model
-    elif paid_model:
-        return paid_model
-    
-    raise ValueError("No valid API keys found for any provider (HF, OpenAI, Moonshot).")
 
 def executive_summary(texts: List[str]) -> Dict[str, Any]:
     s = get_settings()
@@ -61,7 +17,7 @@ def executive_summary(texts: List[str]) -> Dict[str, Any]:
         }
     
     try:
-        llm = _get_llm()
+        llm = get_llm_model()
         prompt = (
             "Analyze the following document content and return a valid JSON object with keys: "
             "DocumentSentiment (Positive/Neutral/Negative), "
