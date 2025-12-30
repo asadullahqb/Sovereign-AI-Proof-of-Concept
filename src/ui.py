@@ -199,7 +199,16 @@ def build_layout() -> None:
                     status_container.success(t["complete"])
                 except Exception as e:
                     status_container.empty()
-                    st.error(t["error_proc"].format(e=e))
+                    import traceback
+                    # Helpful diagnostics for deployment
+                    err_msg = f"{e}\n{traceback.format_exc()}"
+                    try:
+                        import langchain
+                        err_msg += f"\nLangChain Version: {langchain.__version__}"
+                    except:
+                        err_msg += "\nLangChain not found"
+                    
+                    st.error(t["error_proc"].format(e=err_msg))
         if st.session_state.summary:
             from src.analytics import generate_visualization
             fig = generate_visualization(st.session_state.summary)
