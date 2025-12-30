@@ -5,13 +5,13 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')))
 from dotenv import load_dotenv
 load_dotenv()
 
-from langchain_huggingface import HuggingFaceEndpointEmbeddings
+from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 
-print("Testing langchain_huggingface Embeddings...")
+print("Testing langchain_community Embeddings...")
 try:
-    emb = HuggingFaceEndpointEmbeddings(
-        model="sentence-transformers/all-MiniLM-L6-v2",
-        huggingfacehub_api_token=os.getenv("HUGGINGFACEHUB_API_TOKEN")
+    emb = HuggingFaceInferenceAPIEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2",
+        api_key=os.getenv("HUGGINGFACEHUB_API_TOKEN")
     )
     vec = emb.embed_query("hello world")
     print(f"Success! Vector length: {len(vec)}")

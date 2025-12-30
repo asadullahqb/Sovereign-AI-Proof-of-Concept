@@ -1,6 +1,6 @@
 from typing import List
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 def load_pdfs(paths: List[str]) -> List[str]:
     texts: List[str] = []

@@ -2,7 +2,7 @@ from typing import Any, List
 import os
 import sys
 import streamlit as st
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
 from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 from langchain_community.retrievers import BM25Retriever
