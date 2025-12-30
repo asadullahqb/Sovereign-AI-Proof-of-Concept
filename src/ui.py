@@ -134,17 +134,17 @@ def build_layout() -> None:
         with st.expander(t["api_keys"], expanded=True):
             # 1. HF Token (Required for Kimi K2 Thinking)
             default_hf = os.getenv("HUGGINGFACEHUB_API_TOKEN", "")
-            hf_k = st.text_input(t["hf_token"], type="password", value=default_hf, help=t["hf_help"])
+            hf_k = st.text_input(t["hf_token"], type="password", value=default_hf, help=t["hf_help"], key="hf_token_input")
             if hf_k: os.environ["HUGGINGFACEHUB_API_TOKEN"] = hf_k
             
             # 2. OpenAI Key (Optional - for Speed Fallback)
             default_openai = os.getenv("OPENAI_API_KEY", "")
-            openai_k = st.text_input(t["openai_key"], type="password", value=default_openai, help=t["fast_fallback"])
+            openai_k = st.text_input(t["openai_key"], type="password", value=default_openai, help=t["fast_fallback"], key="openai_key_input")
             if openai_k: os.environ["OPENAI_API_KEY"] = openai_k
             
             # 3. Moonshot Key (Optional - for Speed Fallback)
             default_moonshot = os.getenv("MOONSHOT_API_KEY", "")
-            moonshot_k = st.text_input(t["moonshot_key"], type="password", value=default_moonshot, help=t["fast_fallback"])
+            moonshot_k = st.text_input(t["moonshot_key"], type="password", value=default_moonshot, help=t["fast_fallback"], key="moonshot_key_input")
             if moonshot_k: os.environ["MOONSHOT_API_KEY"] = moonshot_k
 
         uploaded = st.file_uploader(t["upload_pdf"], type=["pdf"], accept_multiple_files=True)
@@ -229,7 +229,7 @@ def build_layout() -> None:
              st.session_state.chain = build_conversational_chain(st.session_state.vectorstore, language=st.session_state.language)
              
         if ask and st.session_state.chain and prompt:
-            with st.spinner("Thinking..." if st.session_state.language == "en" else "Sedang berfikir..."):
+            with st.spinner(t["thinking"]):
                 try:
                     resp = st.session_state.chain.invoke({"question": prompt})
                     answer = resp.get("answer", "")

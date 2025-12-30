@@ -80,6 +80,13 @@ class TieredRaceChatModel(BaseChatModel):
             
             # If we are here, one finished but failed, OR we are waiting for the other
             # Wait for the remaining one
+            errors = []
+            for f in done:
+                try:
+                    f.result()
+                except Exception as e:
+                    errors.append(str(e))
+
             for f in not_done:
                 try:
                     print("Waiting for the slower/remaining model...")
@@ -88,8 +95,9 @@ class TieredRaceChatModel(BaseChatModel):
                         return result
                 except Exception as e:
                     print(f"Remaining task failed: {e}")
+                    errors.append(str(e))
             
-            raise RuntimeError("All models failed.")
+            raise RuntimeError(f"All models failed. Errors: {'; '.join(errors)}")
 
     def _safe_invoke(self, model, messages, stop, **kwargs):
         try:
