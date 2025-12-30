@@ -1,12 +1,9 @@
 streamlit
-langchain>=0.3.0
-langchain-community>=0.3.0
-langchain-core>=0.3.0
-langchain-text-splitters>=0.3.0
-langchain-openai
-langchain-chroma
-langchain-anthropic
-langchain-huggingface
+langchain==0.1.20
+langchain-community==0.0.38
+langchain-core==0.1.52
+langchain-openai==0.1.6
+langchain-text-splitters==0.0.1
 chromadb
 pypdf
 python-dotenv

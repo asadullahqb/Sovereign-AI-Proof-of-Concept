@@ -1,5 +1,11 @@
 from typing import Any
-from langchain.chains import ConversationalRetrievalChain
+try:
+    from langchain.chains import ConversationalRetrievalChain
+except ImportError as e:
+    import langchain
+    # This will be caught by UI and displayed
+    raise ImportError(f"Could not import langchain.chains. langchain path: {langchain.__path__ if hasattr(langchain, '__path__') else 'unknown'}, version: {langchain.__version__ if hasattr(langchain, '__version__') else 'unknown'}. Original error: {e}")
+
 from langchain.memory import ConversationBufferMemory
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
