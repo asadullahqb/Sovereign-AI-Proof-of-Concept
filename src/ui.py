@@ -1,5 +1,14 @@
 import os
 import sys
+
+# SQLite fix for Streamlit Community Cloud (Must be before any other imports)
+# Streamlit Cloud uses an older SQLite version, which ChromaDB doesn't like.
+try:
+    __import__('pysqlite3')
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+except ImportError:
+    pass
+
 # Add project root to sys.path so we can import from src
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -18,11 +27,11 @@ TRANSLATIONS = {
         "config": "Configuration",
         "smart_model": "Smart Model Selection",
         "smart_model_help": (
-            "**Strategy:**\n"
-            "1. Tries **Kimi K2 Thinking** (Hugging Face) first.\n"
-            "2. If it exceeds **3 seconds**, it attempts **OpenAI** or **Moonshot AI** (if keys provided) for faster response.\n"
-            "3. If paid models fail (e.g. no credits), it falls back to waiting for Kimi K2.\n\n"
-            "*Prioritizes Speed & Cost Efficiency.*"
+            "**Strategy (3-Tier Race):**\n"
+            "1. **TRM Variant (Local Qwen-0.5B)**: Fastest, runs LOCALLY (no API credits). (10s timeout)\n"
+            "2. **Mistral 7B**: Stronger reasoning, open-source via HF. (3s timeout)\n"
+            "3. **Paid Fallback (Moonshot/OpenAI)**: Used only if open-source models fail or timeout.\n\n"
+            "*Prioritizes Local Tiny Models > Performance > Paid Reliability.*"
         ),
         "api_keys": "API Keys (Required)",
         "hf_token": "Hugging Face Token",
@@ -59,11 +68,11 @@ TRANSLATIONS = {
         "config": "Konfigurasi",
         "smart_model": "Pemilihan Model Pintar",
         "smart_model_help": (
-            "**Strategi:**\n"
-            "1. Mencuba **Kimi K2 Thinking** (Hugging Face) dahulu.\n"
-            "2. Jika melebihi **3 saat**, ia mencuba **OpenAI** atau **Moonshot AI** (jika kunci diberikan) untuk respons lebih pantas.\n"
-            "3. Jika model berbayar gagal, ia kembali menunggu Kimi K2.\n\n"
-            "*Mengutamakan Kelajuan & Kecekapan Kos.*"
+            "**Strategi (Perlumbaan 3-Tahap):**\n"
+            "1. **Varian TRM (Tempatan Qwen-0.5B)**: Paling pantas, berjalan SECARA TEMPATAN (tiada kredit API). (Masa tamat 10s)\n"
+            "2. **Mistral 7B**: Penaakulan lebih kuat, sumber terbuka melalui HF. (Masa tamat 3s)\n"
+            "3. **Sandaran Berbayar (Moonshot/OpenAI)**: Digunakan hanya jika model sumber terbuka gagal atau tamat masa.\n\n"
+            "*Mengutamakan Model Kecil Tempatan > Prestasi > Kebolehpercayaan Berbayar.*"
         ),
         "api_keys": "Kunci API (Diperlukan)",
         "hf_token": "Token Hugging Face",

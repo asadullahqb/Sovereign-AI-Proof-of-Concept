@@ -4,7 +4,7 @@ import sys
 import streamlit as st
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
-from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from langchain_community.retrievers import BM25Retriever
 from langchain_core.documents import Document
 from src.config import get_settings
@@ -17,10 +17,12 @@ def _get_embeddings():
         
     api_key = s.huggingfacehub_api_token
     if api_key:
-        return HuggingFaceInferenceAPIEmbeddings(
-            api_key=api_key,
-            model_name="sentence-transformers/all-MiniLM-L6-v2",
-            api_url="https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2"
+        # Use HuggingFaceEndpointEmbeddings as the modern replacement
+        # It handles the Inference API (serverless) or dedicated endpoints
+        return HuggingFaceEndpointEmbeddings(
+            model="sentence-transformers/all-MiniLM-L6-v2",
+            task="feature-extraction",
+            huggingfacehub_api_token=api_key,
         )
     return None
 
