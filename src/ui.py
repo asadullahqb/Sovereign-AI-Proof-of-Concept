@@ -52,7 +52,8 @@ TRANSLATIONS = {
         "error_gen": "Error during generation: {e}",
         "you": "You",
         "assistant": "Assistant",
-        "upload_prompt": "Upload a PDF and press Process."
+        "upload_prompt": "Upload a PDF and press Process.",
+        "thinking": "Thinking..."
     },
     "ms": {
         "config": "Konfigurasi",
@@ -85,6 +86,8 @@ TRANSLATIONS = {
         "gen_embed": "Menjana benaman vektor (Ini mungkin mengambil masa)...",
         "build_chain": "Membina rantaian AI perbualan...",
         "gen_summary": "Menjana ringkasan eksekutif dan analitik...",
+        "gen_summary_bg": "Memulakan penjanaan ringkasan eksekutif di latar belakang...",
+        "finalizing_summary": "Melengkapkan ringkasan eksekutif...",
         "complete": "Pemprosesan Selesai!",
         "error_proc": "Ralat semasa pemprosesan: {e}",
         "error_gen": "Ralat semasa penjanaan: {e}",
