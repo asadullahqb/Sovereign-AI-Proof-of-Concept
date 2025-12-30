@@ -90,7 +90,8 @@ TRANSLATIONS = {
         "error_gen": "Ralat semasa penjanaan: {e}",
         "you": "Anda",
         "assistant": "Pembantu",
-        "upload_prompt": "Muat naik PDF dan tekan Proses."
+        "upload_prompt": "Muat naik PDF dan tekan Proses.",
+        "thinking": "Sedang berfikir..."
     }
 }
 
