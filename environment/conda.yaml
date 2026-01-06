@@ -1,0 +1,16 @@
+name: azure-mlops-poc-env
+channels:
+  - conda
+  - conda-forge
+dependencies:
+  - python=3.8
+  - pip
+  - pip:
+    - azure-ai-ml
+    - azure-identity
+    - mlflow
+    - azureml-mlflow
+    - lightgbm
+    - scikit-learn
+    - pandas
+    - numpy

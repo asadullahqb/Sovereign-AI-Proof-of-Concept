@@ -1,0 +1,32 @@
+artifact_path: file:C:/Users/Asad/Desktop/Personal Projects Q4 2025/BCG POC/mlruns/0/models/m-a2b006c85ac44727bc84e0f9e13b7c02/artifacts
+flavors:
+  lightgbm:
+    code: null
+    data: model.pkl
+    lgb_version: 4.6.0
+    model_class: lightgbm.sklearn.LGBMClassifier
+  python_function:
+    data: model.pkl
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.lightgbm
+    python_version: 3.13.9
+is_signature_from_type_hint: false
+mlflow_version: 3.8.1
+model_id: m-a2b006c85ac44727bc84e0f9e13b7c02
+model_size_bytes: 674299
+model_uuid: m-a2b006c85ac44727bc84e0f9e13b7c02
+prompts: null
+run_id: c436536fd9374cbc9281798ad3f6cb67
+signature:
+  inputs: '[{"type": "long", "name": "CreditScore", "required": true}, {"type": "long",
+    "name": "Age", "required": true}, {"type": "long", "name": "Tenure", "required":
+    true}, {"type": "double", "name": "Balance", "required": true}, {"type": "long",
+    "name": "NumOfProducts", "required": true}, {"type": "long", "name": "HasCrCard",
+    "required": true}, {"type": "long", "name": "IsActiveMember", "required": true},
+    {"type": "double", "name": "EstimatedSalary", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-01-06 02:30:54.047263'
