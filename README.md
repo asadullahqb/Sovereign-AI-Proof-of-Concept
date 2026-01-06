@@ -25,6 +25,8 @@ azure-mlops-poc/
 ├── deployment/          # Deployment configurations
 │   ├── endpoint.yaml    # Endpoint definition
 │   └── deployment.yaml  # Deployment definition
+├── streamlit_app.py     # Interactive dashboard (local & Azure endpoint)
+├── .env.template        # Environment variables for Azure endpoint
 ├── pipeline_job.py      # Azure ML Pipeline definition
 ├── setup_azure.py       # Helper to setup infrastructure
 └── requirements.txt     # Local dependencies
@@ -67,6 +69,41 @@ Deploy the trained model as a real-time endpoint:
 az ml online-endpoint create --file deployment/endpoint.yaml
 az ml online-deployment create --file deployment/deployment.yaml --all-traffic
 ```
+
+### 4. Streamlit Dashboard (Interactive Testing)
+
+Run a user-friendly UI to test single and batch predictions locally or against an Azure endpoint.
+
+```bash
+# Ensure dependencies are installed
+pip install -r requirements.txt
+
+# Train locally to create artifacts/model.pkl
+python data/generate_data.py
+python src/train.py --data_path data/churn.csv
+
+# Launch the dashboard
+python -m streamlit run streamlit_app.py
+```
+
+- Open the app at http://localhost:8501
+- File: [streamlit_app.py](file:///c:/Users/Asad/Desktop/Personal%20Projects%20Q4%202025/BCG%20POC/streamlit_app.py)
+
+Hosted demo:
+- https://asad-telco.streamlit.app/
+
+To use the Azure endpoint mode, create a `.env` file using:
+
+- Template: [.env.template](file:///c:/Users/Asad/Desktop/Personal%20Projects%20Q4%202025/BCG%20POC/.env.template)
+- Variables:
+  - ENDPOINT_URL: Managed Online Endpoint invoke URL
+  - ENDPOINT_KEY: Endpoint key
+
+Then select “Azure endpoint” in the app to send requests to the deployed model.
+
+The dashboard uses lazy loading to keep startup fast:
+- The local model (artifacts/model.pkl) loads only on first prediction/batch run and is cached.
+- Endpoint credentials load only when Azure mode is used and are cached.
 
 ## 🎯 Job Readiness Demonstration
 
